@@ -6,10 +6,14 @@
     <h3>{{ counterData.title }}:</h3>
   
     <div>
-      <button @click="decreaseCounter" class="btn">-</button>
+      <button @click="decreaseCounter(2)" class="btn">--</button>
+      <button @click="decreaseCounter(1)" class="btn">-</button>
       <span class="counter">{{ counterData.count }}</span>
-      <button @click="increaseCounter" class="btn">+</button>
+      <button @click="increaseCounter(1)" class="btn">+</button>
+      <button @click="increaseCounter(2)" class="btn">++</button>
     </div>
+
+    <p>This counter is {{ oddOrEven }}</p>
 
     <div class="edit">
       <h4>Edit counter title:</h4>
@@ -21,26 +25,58 @@
 
 <!-- Composition API implementation (script setup pattern) -->
 <script setup>
-  import { reactive } from 'vue';
+  import { reactive, computed, watch } from 'vue';
 
   const appTitle = 'My Amazing Counter App';
-
-  // const counter = ref(0);
-  // const counterTitle = ref('My Counter');
 
   const counterData = reactive({
     count: 0,
     title: 'My Counter',
   });
 
-  const increaseCounter = () => {
-    counterData.count++;
+  watch(() => counterData.count, (newCount) => {
+    if (newCount === 20) {
+      alert('Way to go you made it to twenty!!!')
+    }
+  });
+
+  const oddOrEven = computed(() => {
+    if (counterData.count % 2 === 0) {
+      return "even";
+    }
+    return "odd";
+  });
+
+  const increaseCounter = (amount) => {
+    counterData.count += amount;
   }
 
-  const decreaseCounter = () => {
-    counterData.count--;
+  const decreaseCounter = (amount) => {
+    counterData.count -= amount;
   }
 </script>
+
+<!-- Options API computed properties implementation -->
+<!-- <script>
+  export default {
+    data() {
+      return {
+        count: 0
+      }
+    },
+    computed: {
+      myComputedProperty() {
+        // perform logic based on a data property
+        return 'my result';
+      }
+    },
+    watch: {
+      count(newCount, oldCount) {
+        if (newCount == 20) alert('asdfasd');
+      }
+    }
+  }
+</script> -->
 
 <!-- Composition API implementation (function setup pattern) -->
 <!-- 
