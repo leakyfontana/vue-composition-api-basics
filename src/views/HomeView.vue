@@ -4,7 +4,7 @@
     <h2>{{ appTitle }}</h2>
 
     <h3>{{ counterData.title }}:</h3>
-  
+
     <div>
       <button @click="decreaseCounter(2)" class="btn">--</button>
       <button @click="decreaseCounter(1)" class="btn">-</button>
@@ -25,35 +25,54 @@
 
 <!-- Composition API implementation (script setup pattern) -->
 <script setup>
-  import { reactive, computed, watch } from 'vue';
+/* 
+  imports
+*/
+import { reactive, computed, watch, onMounted } from 'vue';
 
-  const appTitle = 'My Amazing Counter App';
+/* 
+app title
+*/
 
-  const counterData = reactive({
-    count: 0,
-    title: 'My Counter',
-  });
+const appTitle = 'My Amazing Counter App';
 
-  watch(() => counterData.count, (newCount) => {
-    if (newCount === 20) {
-      alert('Way to go you made it to twenty!!!')
-    }
-  });
+onMounted(() => {
+  console.log('Do stuff related to App Title');
+});
 
-  const oddOrEven = computed(() => {
-    if (counterData.count % 2 === 0) {
-      return "even";
-    }
-    return "odd";
-  });
+/*
+Counter
+*/
 
-  const increaseCounter = (amount) => {
-    counterData.count += amount;
+const counterData = reactive({
+  count: 0,
+  title: 'My Counter',
+});
+
+watch(() => counterData.count, (newCount) => {
+  if (newCount === 20) {
+    alert('Way to go you made it to twenty!!!')
   }
+});
 
-  const decreaseCounter = (amount) => {
-    counterData.count -= amount;
+const oddOrEven = computed(() => {
+  if (counterData.count % 2 === 0) {
+    return "even";
   }
+  return "odd";
+});
+
+const increaseCounter = (amount) => {
+  counterData.count += amount;
+}
+
+const decreaseCounter = (amount) => {
+  counterData.count -= amount;
+}
+
+onMounted(() => {
+  console.log('Do stuff related to Counter');
+});
 </script>
 
 <!-- Options API computed properties implementation -->
@@ -74,6 +93,12 @@
       count(newCount, oldCount) {
         if (newCount == 20) alert('asdfasd');
       }
+    },
+    mounted() {
+      console.log("mounted");
+    },
+    unmounted() {
+      console.log("unmounted");
     }
   }
 </script> -->
@@ -131,10 +156,13 @@ export default {
   text-align: center;
   padding: 20px;
 }
-.btn, .counter {
+
+.btn,
+.counter {
   font-size: 40px;
   margin: 10px;
 }
+
 .edit {
   margin-top: 60px;
 }
