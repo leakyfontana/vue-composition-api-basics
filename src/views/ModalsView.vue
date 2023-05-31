@@ -1,17 +1,19 @@
 <template>
     <div class="modals">
         <h1>Modals</h1>
+        <div>
+            <label>
+                Show dark modals?
+                <input v-model="showDarkModals" type="checkbox" />
+            </label>
+        </div>
         <button v-if="!showModal" @click="showModal = true">Show modal</button>
-        <Teleport to=".modals-container">
-            <div v-if="showModal" class="modal">
-                <h1>This is a modal</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis accusantium tenetur molestias tempora
-                    illo sunt est vero, saepe quae aspernatur voluptates dolor odio vel, ipsa facilis! Exercitationem dicta
-                    consectetur obcaecati eos illum fuga voluptatibus laudantium ipsa doloribus impedit? Cum et consequuntur
-                    vitae perferendis voluptatum assumenda. Quisquam recusandae commodi maxime excepturi?</p>
-                <button v-if="showModal" @click="showModal = false">Hide modal</button>
-            </div>
-        </Teleport>
+        <Modal :isDark="showDarkModals" v-model="showModal" @hideModal="showModal = false" title="My modal title (via prop)">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis accusantium tenetur molestias tempora
+                illo sunt est vero, saepe quae aspernatur voluptates dolor odio vel, ipsa facilis! Exercitationem dicta
+                consectetur obcaecati eos illum fuga voluptatibus laudantium ipsa doloribus impedit? Cum et consequuntur
+                vitae perferendis voluptatum assumenda. Quisquam recusandae commodi maxime excepturi?</p>
+        </Modal>
     </div>
 </template>
 
@@ -21,24 +23,29 @@
 */
 
 import { ref } from 'vue';
+import Modal from '@/components/Modal.vue';
+
+/*
+    props
+*/
 
 /*
     modals
 */
 
+const showDarkModals = ref(false);
 const showModal = ref(false);
 </script>
 
-<style>
-.modal {
-    background: beige;
-    color: black;
-    padding: 10px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+<!-- Importing components with the options API -->
+<!-- 
+<script>
+import Modal from '@/components/Modal.vue'
+
+export default {
+    components: {
+        Modal
+    }
 }
-</style>
+</script> 
+-->
